@@ -189,7 +189,7 @@ void AIChatAssistant::slotSend()
         // work-around for llamafile for now
         dd["temperature"]=config->ai_temperature;
     }
-    if(config->ai_provider==1){
+    if(config->ai_provider>1){
         // work-around for openai
         bool ok;
         float val=config->ai_temperature.toFloat(&ok);
