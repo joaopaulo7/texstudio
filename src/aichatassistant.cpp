@@ -323,19 +323,25 @@ void AIChatAssistant::slotOptions()
     QDialog dlg;
     auto *ly=new QVBoxLayout();
     auto *leSystemPrompt=new QTextEdit();
-    leSystemPrompt->setText(config->ai_systemPrompt);
-    if(config->ai_systemPrompt.isEmpty()){
-        leSystemPrompt->setPlaceholderText(tr("System prompt"));
+    if(!ja_messages.isEmpty()){
+        leSystemPrompt->setEnabled(false);
+        if(ja_messages.first()["role"]=="system")
+            leSystemPrompt->setText("morte");//ja_messages.first()["content"].toString());
+    }else{
+        leSystemPrompt->setText(config->ai_systemPrompt);
+        if(config->ai_systemPrompt.isEmpty()){
+            leSystemPrompt->setPlaceholderText(tr("System prompt"));
+        }
     }
     ly->addWidget(leSystemPrompt);
     auto *leTemp=new QLineEdit();
     leTemp->setText(config->ai_temperature);
     // use validator which allow 0.0 to 1.0/2.0
     float maxTemp=1.0;
-    QRegularExpression rx("0\\.[0-9]*|1");
-    if(config->ai_provider==1){
+    QRegularExpression rx("0\\.[0-9]*|1|1.0");
+    if(config->ai_provider>1){
         maxTemp=2.0;
-        rx.setPattern("[01]\\.[0-9]*|2");
+        rx.setPattern("[01]\\.[0-9]*|2|2.0");
     }
     auto *validator=new QRegularExpressionValidator(rx);
     leTemp->setValidator(validator);
@@ -551,15 +557,15 @@ QString AIChatAssistant::getConversationForBrowser()
             }
             result.append(cnt);
             result.append("\n</div>\n");
-        }/*else if(role=="assistant"){
-            if(darkMode){
+        }else if(role=="assistant"){
+            /*if(darkMode){
                 result.append("<p style=\"background-color: cornflowerblue;margin-left: 20px\">\n");
             }else{
                 result.append("<p style=\"background-color: aliceblue;margin-left: 20px\">\n");
-            }
-            result.append(cnt);
-            result.append("\n</p>\n");
-        }*/
+            }*/
+            result.append("<div>"+cnt+"</div>");
+            //result.append("\n</p>\n");
+        }
     }
     return result;
 }
