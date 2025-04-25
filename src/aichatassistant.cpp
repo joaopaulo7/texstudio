@@ -545,13 +545,13 @@ QString AIChatAssistant::getConversationForBrowser()
 #endif
         if(role=="user"){
             if(darkMode){
-                result.append("<p style=\"background-color: darkorange\">\n");
+                result.append("<div style=\"background-color: darkorange\">\n");
             }else{
-                result.append("<p style=\"background-color: bisque\">\n");
+                result.append("<div style=\"background-color: bisque\">\n");
             }
             result.append(cnt);
-            result.append("\n</p>\n");
-        }else if(role=="assistant"){
+            result.append("\n</div>\n");
+        }/*else if(role=="assistant"){
             if(darkMode){
                 result.append("<p style=\"background-color: cornflowerblue;margin-left: 20px\">\n");
             }else{
@@ -559,7 +559,7 @@ QString AIChatAssistant::getConversationForBrowser()
             }
             result.append(cnt);
             result.append("\n</p>\n");
-        }
+        }*/
     }
     return result;
 }
