@@ -214,7 +214,7 @@ void AIChatAssistant::slotSend()
     ja_message["role"]="user";
     // prepend selected text to question
     if(!m_selectedText.isEmpty()){
-        question="text=\"\"\""+m_selectedText+"\"\"\"\n"+question;
+        question.replace(QRegularExpression("%TEXT"), "\n\ntext\n\"\"\""+m_selectedText+"\n\"\"\"\n");
     }
     ja_message["content"]=question;
 
