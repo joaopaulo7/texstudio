@@ -369,7 +369,7 @@ void AIChatAssistant::slotOptions()
     connect(buttonBox, &QDialogButtonBox::accepted,[&](){
         if(ja_messages.isEmpty())
             config->ai_systemPrompt=leSystemPrompt->toPlainText();
-        if(config->ai_provider!=2)
+        if(config->ai_provider!=3)
             config->ai_temperature=leTemp->text();
         config->ai_streamResults=cbStream->isChecked();
         dlg.close();
