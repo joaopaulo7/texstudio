@@ -170,13 +170,18 @@ void GrammarCheck::check(const QString &language, LatexDocument *doc, const QLis
 	}
 
 	//qDebug()<<"CHECK:"<<inlines.first().text;
-
+    
+    for(int i = 0; i< requests.size(); i++) {
+        if(requests[i].firstLineNr == firstLineNr)
+            requests[i].pending = false;
+    }
+    
 	requests << CheckRequest(languageFromHunspellToLanguageTool(language), doc, inlines, firstLineNr, ticket);
 
 	//Delay processing, because there might be more requests for the same line in the event queue and only the last one needs to be checked
 	if (!pendingProcessing) {
 		pendingProcessing = true;
-		QTimer::singleShot(50, this, SLOT(processLoop()));
+		QTimer::singleShot(10000, this, SLOT(processLoop()));
 	}
 }
 
